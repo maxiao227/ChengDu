@@ -2,7 +2,7 @@
 import yaml
 
 from IndexofTheTraffic import IndexofTheTraffic
-from Oracle import Oracle
+from OraclePool import OraclePool
 
 if __name__ == '__main__':
     with open('db.yaml', 'r') as f:
@@ -10,6 +10,6 @@ if __name__ == '__main__':
         user = db_info['user']
         password = db_info['password']
         dsn = db_info['dsn']
-    ora = Oracle(db_info=db_info)
+    ora = OraclePool(db_info=db_info)
     temp = IndexofTheTraffic(ora)
     temp.getinit()

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import time
 
-import schedule
 import yaml
+
+from IndexofTheTraffic import IndexofTheTraffic
 
 if __name__ == '__main__':
     with open('db.yaml', 'r') as f:
@@ -12,17 +12,21 @@ if __name__ == '__main__':
         dsn = db_info['dsn']
 
 
+    def indexofthetrafficcontrolControl():
+        indexofthetraffic = IndexofTheTraffic(db_info)
+        indexofthetraffic.deal()
+
+
+    indexofthetrafficcontrolControl()
+
     # temp = DateClean(db_info)
     # # temp.getinit()
     # temp.clean()
-    def job():
-        print("I'm working...")
-
-
-    schedule.every().minutes.do(job)
-    #
     # congestionrank = CongestionRank(db_info)
     # # schedule.every().days.do(congestionrank.deal())
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+
+    # schedule.every().days.at('10:30').do(indexofthetrafficcontrolControl)
+    #
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1)

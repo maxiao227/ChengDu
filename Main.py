@@ -1,8 +1,35 @@
 # -*- coding: utf-8 -*-
+import time
+from concurrent.futures import ThreadPoolExecutor
 
+import schedule
 import yaml
 
+from CongestionRank import CongestionRank
 from IndexofTheTraffic import IndexofTheTraffic
+
+executor = ThreadPoolExecutor(2)
+
+
+def indexofthetrafficcontrolControl():
+    indexofthetraffic = IndexofTheTraffic(db_info)
+    indexofthetraffic.deal()
+
+
+def CongestionRankControl():
+    congestionrank = CongestionRank(db_info)
+    congestionrank.deal()
+
+
+def job1_task():
+    # threading.Thread(target=indexofthetrafficcontrolControl).start()
+    executor.submit(indexofthetrafficcontrolControl)
+
+
+def job2_task():
+    # threading.Thread(target=CongestionRankControl).start()
+    executor.submit(CongestionRankControl)
+
 
 if __name__ == '__main__':
     with open('db.yaml', 'r') as f:
@@ -10,23 +37,8 @@ if __name__ == '__main__':
         user = db_info['user']
         password = db_info['password']
         dsn = db_info['dsn']
-
-
-    def indexofthetrafficcontrolControl():
-        indexofthetraffic = IndexofTheTraffic(db_info)
-        indexofthetraffic.deal()
-
-
-    indexofthetrafficcontrolControl()
-
-    # temp = DateClean(db_info)
-    # # temp.getinit()
-    # temp.clean()
-    # congestionrank = CongestionRank(db_info)
-    # # schedule.every().days.do(congestionrank.deal())
-
-    # schedule.every().days.at('10:30').do(indexofthetrafficcontrolControl)
-    #
-    # while True:
-    #     schedule.run_pending()
-    #     time.sleep(1)
+    schedule.every().minutes.do(job1_task)
+    schedule.every().minutes.do(job2_task)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)

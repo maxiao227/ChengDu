@@ -13,9 +13,9 @@ class Oracle:
 
     def insert(self, sql):
         try:
+            print(sql)
             self.cursor.execute(sql)
             self.conn.commit()
-            print(sql)
         except Exception as e:
             self.conn.close()
             print(e)

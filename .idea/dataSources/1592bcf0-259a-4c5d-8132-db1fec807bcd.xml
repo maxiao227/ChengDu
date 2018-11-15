@@ -6,9 +6,9 @@
     </root>
     <schema id="2" parent="1" name="JHGX">
       <ObjectId>113</ObjectId>
-      <IntrospectionTimestamp>2018-11-15.17:45:13</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2018-11-15.23:32:24</IntrospectionTimestamp>
       <CreatedTimestamp>2018-10-24.18:06:17</CreatedTimestamp>
-      <ModifiedTimestamp>2018-11-15.17:45:02</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-11-15.23:32:07</ModifiedTimestamp>
       <CommentsHash>2875009925633600</CommentsHash>
       <Current>1</Current>
       <Visible>1</Visible>
@@ -209,7 +209,7 @@
       <ObjectId>90613</ObjectId>
       <Comment>拥堵里程分析表</Comment>
       <CreatedTimestamp>2018-11-14.10:24:11</CreatedTimestamp>
-      <ModifiedTimestamp>2018-11-14.15:55:37</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-11-15.23:32:07</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="55" parent="2" name="AV_CONGESTION_RANKING">
@@ -631,7 +631,7 @@
       <Position>5</Position>
       <Comment>提交时间</Comment>
       <DataType>DATE|0s</DataType>
-      <DefaultExpression>sysdate </DefaultExpression>
+      <DefaultExpression>sysdate</DefaultExpression>
     </column>
     <index id="120" parent="46" name="SYS_C0013007">
       <ObjectId>90406</ObjectId>
@@ -985,12 +985,14 @@ CBEGINTIME</ColNames>
     <column id="181" parent="54" name="CONGESTION_MILEAGE">
       <Position>2</Position>
       <Comment>拥堵里程</Comment>
-      <DataType>VARCHAR2(20 byte)|0s</DataType>
+      <DataType>NUMBER(5 digit)|0s</DataType>
+      <DefaultExpression>NULL</DefaultExpression>
     </column>
     <column id="182" parent="54" name="MILEAGE_COUNT">
       <Position>3</Position>
       <Comment>总里程</Comment>
-      <DataType>VARCHAR2(20 byte)|0s</DataType>
+      <DataType>NUMBER(5 digit)|0s</DataType>
+      <DefaultExpression>NULL</DefaultExpression>
     </column>
     <column id="183" parent="54" name="RATIO">
       <Position>4</Position>
@@ -1101,7 +1103,7 @@ CBEGINTIME</ColNames>
       <Comment>UUID</Comment>
       <DataType>RAW(16 byte)|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>sys_guid() </DefaultExpression>
+      <DefaultExpression>sys_guid()</DefaultExpression>
     </column>
     <column id="202" parent="57" name="BATCH_NO">
       <Position>2</Position>
@@ -1158,7 +1160,7 @@ CBEGINTIME</ColNames>
       <Comment>入库日期时间</Comment>
       <DataType>DATE|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>sysdate </DefaultExpression>
+      <DefaultExpression>sysdate</DefaultExpression>
     </column>
     <column id="213" parent="58" name="ID">
       <Position>1</Position>

@@ -6,9 +6,9 @@
     </root>
     <schema id="2" parent="1" name="JHGX">
       <ObjectId>113</ObjectId>
-      <IntrospectionTimestamp>2018-11-15.16:12:02</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2018-11-15.17:45:13</IntrospectionTimestamp>
       <CreatedTimestamp>2018-10-24.18:06:17</CreatedTimestamp>
-      <ModifiedTimestamp>2018-11-15.16:11:53</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-11-15.17:45:02</ModifiedTimestamp>
       <CommentsHash>2875009925633600</CommentsHash>
       <Current>1</Current>
       <Visible>1</Visible>
@@ -153,7 +153,7 @@
       <ObjectId>90405</ObjectId>
       <Comment>拥堵楼口状态表</Comment>
       <CreatedTimestamp>2018-11-03.15:54:16</CreatedTimestamp>
-      <ModifiedTimestamp>2018-11-15.11:30:21</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-11-15.17:45:02</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="47" parent="2" name="AR_JAMROADTIME">
@@ -229,7 +229,7 @@
     <table id="57" parent="2" name="AV_ONWAY_VEHICLE">
       <ObjectId>90721</ObjectId>
       <CreatedTimestamp>2018-11-15.14:37:47</CreatedTimestamp>
-      <ModifiedTimestamp>2018-11-15.15:05:49</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-11-15.17:23:55</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="58" parent="2" name="AV_TAXI_AREA_RANK">
@@ -631,7 +631,7 @@
       <Position>5</Position>
       <Comment>提交时间</Comment>
       <DataType>DATE|0s</DataType>
-      <DefaultExpression>sysdate</DefaultExpression>
+      <DefaultExpression>sysdate </DefaultExpression>
     </column>
     <index id="120" parent="46" name="SYS_C0013007">
       <ObjectId>90406</ObjectId>
@@ -834,7 +834,7 @@ NAPPROACHDIRECTION</ColNames>
       <Position>12</Position>
       <DataType>DATE|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>sysdate </DefaultExpression>
+      <DefaultExpression>sysdate</DefaultExpression>
     </column>
     <index id="154" parent="49" name="PK_VARIABLE_LANE_CHECK_RESULT">
       <ObjectId>90720</ObjectId>
@@ -1072,14 +1072,14 @@ CBEGINTIME</ColNames>
       <Comment>编号</Comment>
       <DataType>RAW(16 byte)|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>sys_guid() </DefaultExpression>
+      <DefaultExpression>sys_guid()</DefaultExpression>
     </column>
     <column id="197" parent="56" name="UPDATE_TIME">
       <Position>2</Position>
       <Comment>插入时间</Comment>
       <DataType>DATE|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>sysdate </DefaultExpression>
+      <DefaultExpression>sysdate</DefaultExpression>
     </column>
     <column id="198" parent="56" name="BEGINTIME">
       <Position>3</Position>

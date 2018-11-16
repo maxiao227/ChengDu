@@ -34,7 +34,7 @@ class TrafficMileage:
         LengthofCongestion = 0
         if len(rows) == 0:
             # 如果读取不到数据，中止传统方式，改用planB
-            return 0
+            return False
         for row in rows:
             fbd = row[0]
             length = self.extent(fbd)
@@ -47,7 +47,7 @@ class TrafficMileage:
                 else:
                     LengthofCongestion += length
         if LengthofCongestion == 0:
-            return 0
+            return False
         else:
             ratio = round((overalLength / LengthofCongestion) * 100, 2)
 
@@ -70,7 +70,7 @@ class TrafficMileage:
                     "(sys_guid(), " + str(overalLength) + ", " + str(LengthofCongestion) + ", '" + str(
             ratio) + "', '" + str(lengthHis) + "', '" + str(lengthPerio) + "', sysdate, '" + str(BATCH_NO) + "')"
         self.ora.insert(sqlInsert)
-        return 1
+        return True
 
     def extent(self, fbd):
         if fbd.startswith('FBD_YH'):

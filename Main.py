@@ -16,7 +16,7 @@ def indexofthetrafficcontrolControl():
     """
     indexofthetraffic = IndexofTheTraffic(db_info)
     result = indexofthetraffic.deal()
-    if result == 1:
+    if result:
         print(u'交通指数算法执行成功')
     else:
         indexofthetraffic.planB()
@@ -27,7 +27,11 @@ def CongestionRankControl():
     拥堵排名
     """
     congestionrank = CongestionRank(db_info)
-    congestionrank.deal()
+    result = congestionrank.deal()
+    if result:
+        print(u'拥堵排名算法执行成功')
+    else:
+        congestionrank.planB()
 
 
 def TrafficMileageControl():
@@ -36,7 +40,7 @@ def TrafficMileageControl():
     """
     trafficmileage = TrafficMileage(db_info)
     result = trafficmileage.deal()
-    if result == 1:
+    if result:
         print(u'拥堵里程算法执行成功')
     else:
         trafficmileage.planB()
@@ -67,7 +71,8 @@ if __name__ == '__main__':
         user = db_info['user']
         password = db_info['password']
         dsn = db_info['dsn']
-    indexofthetrafficcontrolControl()
+    # indexofthetrafficcontrolControl()
+    CongestionRankControl()
     # schedule.every().minutes.do(job1_task)
     # schedule.every().minutes.do(job2_task)
     # while True:

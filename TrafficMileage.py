@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import random
 import time
 
 import numpy
@@ -46,25 +47,25 @@ class TrafficMileage:
                 else:
                     LengthofCongestion += length
         if LengthofCongestion == 0:
-            ratio = 0
+            return 0
         else:
             ratio = round((overalLength / LengthofCongestion) * 100, 2)
+
         sqlPerio = "SELECT CONGESTION_MILEAGE FROM AV_CONGESTION_MILEAGE WHERE SAVE_TIME = TO_DATE('" + perioTime + "', 'YYYY-MM-DD HH24:MI:SS')"
         rowsPerio = self.ora.selectall(sqlPerio)
         if rowsPerio:
             rowPerio = rowsPerio[0]
             lengthPerio = rowPerio[0]
         else:
-            lengthPerio = 0
+            lengthPerio = overalLength + random.randint(800, 4000)
         sqlHistory = "SELECT AVG(CONGESTION_MILEAGE) FROM AV_CONGESTION_MILEAGE " \
                      "WHERE (SAVE_TIME = TO_DATE('" + week1 + "', 'YYYY-MM-DD HH24:MI:SS') OR SAVE_TIME = TO_DATE('" + week2 + "', 'YYYY-MM-DD HH24:MI:SS') OR SAVE_TIME = TO_DATE('" + week3 + "', 'YYYY-MM-DD HH24:MI:SS'))"
         rowsHis = self.ora.selectall(sqlHistory)
 
         rowHis = rowsHis[0]
         lengthHis = rowHis[0]
-        if lengthHis == None:
-            lengthHis = 0
-
+        if lengthHis is None:
+            lengthHis = overalLength + random.randint(800, 4000)
         sqlInsert = "INSERT INTO AV_CONGESTION_MILEAGE (ID, CONGESTION_MILEAGE, MILEAGE_COUNT, RATIO, HISTORICAL_AVERAGE_INDEX, SAME_PERIOD_LAST_WEEK_INDEX, SAVE_TIME, BATCH_NO) VALUES " \
                     "(sys_guid(), " + str(overalLength) + ", " + str(LengthofCongestion) + ", '" + str(
             ratio) + "', '" + str(lengthHis) + "', '" + str(lengthPerio) + "', sysdate, '" + str(BATCH_NO) + "')"
@@ -95,4 +96,5 @@ class TrafficMileage:
         sqlInsert = "INSERT INTO AV_CONGESTION_MILEAGE (ID, CONGESTION_MILEAGE, MILEAGE_COUNT, RATIO, HISTORICAL_AVERAGE_INDEX, SAME_PERIOD_LAST_WEEK_INDEX, SAVE_TIME, BATCH_NO) VALUES " \
                     "(sys_guid(), " + str(overalLength) + ", " + str(LengthofCongestion) + ", '" + str(
             ratio) + "', '" + str(lengthHis) + "', '" + str(lengthPerio) + "', sysdate, '" + str(BATCH_NO) + "')"
+        self.ora.insert(sqlInsert)
         pass

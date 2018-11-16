@@ -51,7 +51,7 @@ class TrafficMileage:
         else:
             ratio = round((overalLength / LengthofCongestion) * 100, 2)
 
-        sqlPerio = "SELECT CONGESTION_MILEAGE FROM AV_CONGESTION_MILEAGE WHERE SAVE_TIME = TO_DATE('" + perioTime + "', 'YYYY-MM-DD HH24:MI:SS')"
+        sqlPerio = "SELECT CONGESTION_MILEAGE FROM AV_CONGESTION_MILEAGE WHERE SAVE_TIME <= TO_DATE('" + perioTime + "', 'YYYY-MM-DD HH24:MI:SS') and SAVE_TIME > TO_DATE('" + perioTime + "', 'YYYY-MM-DD HH24:MI:SS')-1/720"
         rowsPerio = self.ora.selectall(sqlPerio)
         if rowsPerio:
             rowPerio = rowsPerio[0]
@@ -59,7 +59,7 @@ class TrafficMileage:
         else:
             lengthPerio = overalLength + random.randint(800, 4000)
         sqlHistory = "SELECT AVG(CONGESTION_MILEAGE) FROM AV_CONGESTION_MILEAGE " \
-                     "WHERE (SAVE_TIME = TO_DATE('" + week1 + "', 'YYYY-MM-DD HH24:MI:SS') OR SAVE_TIME = TO_DATE('" + week2 + "', 'YYYY-MM-DD HH24:MI:SS') OR SAVE_TIME = TO_DATE('" + week3 + "', 'YYYY-MM-DD HH24:MI:SS'))"
+                     "WHERE ((SAVE_TIME <= TO_DATE('" + week1 + "', 'YYYY-MM-DD HH24:MI:SS') and (SAVE_TIME > TO_DATE('" + week1 + "', 'YYYY-MM-DD HH24:MI:SS')-1/720) OR (SAVE_TIME <= TO_DATE('" + week2 + "', 'YYYY-MM-DD HH24:MI:SS')and (SAVE_TIME > TO_DATE('" + week2 + "', 'YYYY-MM-DD HH24:MI:SS')-1/720) OR (SAVE_TIME = TO_DATE('" + week3 + "', 'YYYY-MM-DD HH24:MI:SS') and (SAVE_TIME > TO_DATE('" + week3 + "', 'YYYY-MM-DD HH24:MI:SS')-1/720)"
         rowsHis = self.ora.selectall(sqlHistory)
 
         rowHis = rowsHis[0]

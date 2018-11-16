@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+import time
 from concurrent.futures import ThreadPoolExecutor
 
+import schedule
 import yaml
 
 from CongestionRank import CongestionRank
-from DateClean import DateClean
 from IndexofTheTraffic import IndexofTheTraffic
 from TrafficMileage import TrafficMileage
 
@@ -63,6 +64,14 @@ def job2_task():
     executor.submit(CongestionRankControl)
 
 
+def job3_task():
+    """
+    将拥堵里程放入线程池中执行
+    """
+    # threading.Thread(target=TrafficMileageControl).start()
+    executor.submit(TrafficMileageControl)
+
+
 if __name__ == '__main__':
     """
     Main函数
@@ -72,12 +81,10 @@ if __name__ == '__main__':
         user = db_info['user']
         password = db_info['password']
         dsn = db_info['dsn']
-    # indexofthetrafficcontrolControl()
-    CongestionRankControl()
-    # temp = DateClean(db_info)
-    # temp.getinit()
-    # schedule.every().minutes.do(job1_task)
-    # schedule.every().minutes.do(job2_task)
-    # while True:
-    #     schedule.run_pending()
-    #     time.sleep(1)
+
+    schedule.every(2).minutes.do(job1_task)
+    schedule.every(2).minutes.do(job2_task)
+    schedule.every(2).minutes.do(job3_task)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)

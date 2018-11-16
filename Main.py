@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 import yaml
 
 from CongestionRank import CongestionRank
+from DateClean import DateClean
 from IndexofTheTraffic import IndexofTheTraffic
 from TrafficMileage import TrafficMileage
 
@@ -73,6 +74,8 @@ if __name__ == '__main__':
         dsn = db_info['dsn']
     # indexofthetrafficcontrolControl()
     CongestionRankControl()
+    # temp = DateClean(db_info)
+    # temp.getinit()
     # schedule.every().minutes.do(job1_task)
     # schedule.every().minutes.do(job2_task)
     # while True:

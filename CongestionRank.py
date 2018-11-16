@@ -8,6 +8,7 @@ from Oracle import Oracle
 class CongestionRank:
     def __init__(self, db_info):
         self.ora = Oracle(db_info)
+        # self.ora = OraclePool(db_info)
         pass
 
     def deal(self):

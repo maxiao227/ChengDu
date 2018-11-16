@@ -9,12 +9,13 @@ class Oracle:
         # 连接池方式
         self.db_info = db_info
         self.conn = cx_Oracle.connect(user=db_info['user'], password=db_info['password'], dsn=db_info['dsn'])
-        self.cursor = self.conn.cursor()
 
     def insert(self, sql):
         try:
             print(sql)
-            self.cursor.execute(sql)
+            cursor = self.conn.cursor()
+            cursor.execute(sql)
+            cursor.close()
             self.conn.commit()
         except Exception as e:
             self.conn.close()
@@ -22,8 +23,10 @@ class Oracle:
 
     def selectall(self, sql):
         try:
-            self.cursor.execute(sql)
-            result = self.cursor.fetchall()
+            cursor = self.conn.cursor()
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            cursor.close()
             print(sql)
             return result
         except Exception as e:
@@ -32,7 +35,9 @@ class Oracle:
 
     def update(self, sql):
         try:
-            self.cursor.execute(sql)
+            cursor = self.conn.cursor()
+            cursor.execute(sql)
+            cursor.close()
             print(sql)
             self.conn.commit()
         except Exception as e:
@@ -41,7 +46,9 @@ class Oracle:
 
     def delete(self, sql):
         try:
-            self.cursor.execute(sql)
+            cursor = self.conn.cursor()
+            cursor.execute(sql)
+            cursor.close()
             print(sql)
             self.conn.commit()
         except Exception as e:

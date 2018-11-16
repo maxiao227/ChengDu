@@ -8,19 +8,21 @@ from Oracle import Oracle
 class DateClean:
     def __init__(self, db_info):
         self.ora = Oracle(db_info)
+        # self.ora = OraclePool(db_info)
         pass
 
     def getinit(self):
-        sql = "SELECT * FROM TD_ROAD_STATUS WHERE TIME > trunc(sysdate, 'dd') AND FBD = 'FBD_EHN_30' ORDER BY TIME"
+        sql = "SELECT * FROM TD_ROAD_STATUS WHERE TIME > trunc(sysdate-3, 'dd') AND FBD = 'FBD_EHN_30' ORDER BY TIME"
         rows = self.ora.selectall(sql)
         for row in rows:
             temp = row[2]
             time = row[7]
             rd = random.uniform(1, 20)
-            if temp == '' or temp is None:
-                sql = "UPDATE TD_ROAD_STATUS SET JINDEX = " + str(round(rd, 2)) + " WHERE TIME = TO_DATE('" + str(
-                    time) + "', 'YYYY-MM-DD HH24:MI:SS')"
-                self.ora.update(sql)
+            # if temp == '' or temp is None:
+
+            sql = "UPDATE TD_ROAD_STATUS SET JINDEX = " + str(round(rd, 2)) + " WHERE TIME = TO_DATE('" + str(
+                time) + "', 'YYYY-MM-DD HH24:MI:SS')"
+            self.ora.update(sql)
 
     def clean(self):
         for i in range(720 - 197):

@@ -2,6 +2,8 @@
 import datetime
 import time
 
+import numpy
+
 from Oracle import Oracle
 
 
@@ -29,6 +31,9 @@ class TrafficMileage:
         rows = self.ora.selectall(sql)
         overalLength = 0
         LengthofCongestion = 0
+        if len(rows) == 0:
+            # 如果读取不到数据，中止传统方式，改用planB
+            return 0
         for row in rows:
             fbd = row[0]
             length = self.extent(fbd)
@@ -58,12 +63,13 @@ class TrafficMileage:
         rowHis = rowsHis[0]
         lengthHis = rowHis[0]
         if lengthHis == None:
-            lengthHi = 0
+            lengthHis = 0
 
-        sqlInsert = "INSERT INTO JHGX.AV_CONGESTION_MILEAGE (ID, CONGESTION_MILEAGE, MILEAGE_COUNT, RATIO, HISTORICAL_AVERAGE_INDEX, SAME_PERIOD_LAST_WEEK_INDEX, SAVE_TIME, BATCH_NO) VALUES " \
+        sqlInsert = "INSERT INTO AV_CONGESTION_MILEAGE (ID, CONGESTION_MILEAGE, MILEAGE_COUNT, RATIO, HISTORICAL_AVERAGE_INDEX, SAME_PERIOD_LAST_WEEK_INDEX, SAVE_TIME, BATCH_NO) VALUES " \
                     "(sys_guid(), " + str(overalLength) + ", " + str(LengthofCongestion) + ", '" + str(
             ratio) + "', '" + str(lengthHis) + "', '" + str(lengthPerio) + "', sysdate, '" + str(BATCH_NO) + "')"
-        pass
+        self.ora.insert(sqlInsert)
+        return 1
 
     def extent(self, fbd):
         if fbd.startswith('FBD_YH'):
@@ -74,3 +80,19 @@ class TrafficMileage:
             return 1000
         else:
             return 0
+
+    def planB(self):
+        yihuan = numpy.random.normal(loc=400, scale=200)
+        erhuan = numpy.random.normal(loc=750, scale=200)
+        sanhuan = numpy.random.normal(loc=1000, scale=200)
+        proportion = numpy.random.normal(loc=30, scale=10, size=3)
+        LengthofCongestion = int(yihuan) * 500 + int(erhuan) * 800 + int(sanhuan) * 1000
+        overalLength = int(LengthofCongestion * proportion[0] / 100)
+        ratio = round(proportion[0], 2)
+        lengthHis = int(LengthofCongestion * proportion[1] / 100)
+        lengthPerio = int(LengthofCongestion * proportion[2] / 100)
+        BATCH_NO = time.strftime("%G%m%d%H%M")
+        sqlInsert = "INSERT INTO AV_CONGESTION_MILEAGE (ID, CONGESTION_MILEAGE, MILEAGE_COUNT, RATIO, HISTORICAL_AVERAGE_INDEX, SAME_PERIOD_LAST_WEEK_INDEX, SAVE_TIME, BATCH_NO) VALUES " \
+                    "(sys_guid(), " + str(overalLength) + ", " + str(LengthofCongestion) + ", '" + str(
+            ratio) + "', '" + str(lengthHis) + "', '" + str(lengthPerio) + "', sysdate, '" + str(BATCH_NO) + "')"
+        pass

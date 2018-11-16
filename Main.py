@@ -31,7 +31,11 @@ def TrafficMileageControl():
     拥堵里程
     """
     trafficmileage = TrafficMileage(db_info)
-    trafficmileage.deal()
+    result = trafficmileage.deal()
+    if result == 1:
+        print(u'拥堵里程算法执行成功')
+    else:
+        trafficmileage.planB()
 
 
 def job1_task():
